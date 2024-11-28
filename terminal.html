@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KALI LINUX</title>
+    <style>
+        /* Тарҳи зебо барои терминал */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            background-color: #1e1e2f;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .terminal-container {
+            width: 90%;
+            max-width: 800px;
+            background: #282c34;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: linear-gradient(90deg, #61dafb, #21a1f1);
+            padding: 10px;
+            text-align: center;
+            color: #282c34;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .terminal-body {
+            padding: 15px;
+            background-color: #1e1e2f;
+            font-size: 1rem;
+            height: 400px;
+            overflow-y: auto;
+            line-height: 1.5;
+        }
+
+        .terminal-body p {
+            margin: 0;
+        }
+
+        .terminal-input {
+            display: flex;
+            background: #21252b;
+            padding: 10px;
+        }
+
+        .terminal-input input {
+            flex: 1;
+            background: #282c34;
+            color: #61dafb;
+            border: none;
+            outline: none;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+
+        .terminal-input button {
+            background: #61dafb;
+            color: #282c34;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        .terminal-input button:hover {
+            background: #21a1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal-container">
+        <div class="terminal-header">Терминали - Kali Linux</div>
+        <div class="terminal-body" id="terminal-body">
+            <p>Хуш омадед! Шумо метавонед командаҳоро иҷро кунед.</p>
+        </div>
+        <div class="terminal-input">
+            <input type="text" id="command-input" placeholder="Команда ворид кунед...">
+            <button onclick="executeCommand()">Иҷро</button>
+        </div>
+    </div>
+
+    <script>
+        
+        // Маълумот дар бораи система
+        let currentDirectory = "/";
+        let fileSystem = {
+            "/": {}
+        };
+        let installedPackages = [];
+
+        const terminalBody = document.getElementById("terminal-body");
+        const commandInput = document.getElementById("command-input");
+
+        function executeCommand() {
+            const command = commandInput.value.trim();
+            commandInput.value = "";
+
+            // Намоиши команда дар терминал
+            terminalBody.innerHTML += `<p><span style="color: #61dafb;">$</span> ${command}</p>`;
+            const [cmd, ...args] = command.split(" ");
+
+            switch (cmd) {
+                case "sudo":
+                    if (args[0] === "apt" && args[1] === "update") {
+                        displayOutput("Система бо муваффақият навсозӣ шуд.");
+                    } else if (args[0] === "apt" && args[1] === "install") {
+                        if (args[2]) {
+                            installedPackages.push(args[2]);
+                            displayOutput(`Барномаи "${args[2]}" бо муваффақият насб шуд.`);
+                        } else {
+                            displayOutput("Илтимос, номи барномаро нишон диҳед.");
+                        }
+                    } else {
+                        displayOutput("Командаи sudo нодуруст аст.");
+                    }
+                    break;
+                    case "pwd":
+    displayOutput(`Директорияи ҷорӣ: ${currentDirectory}`);
+    break;
+
+
+                case "ls":
+                    const files = Object.keys(fileSystem[currentDirectory] || {}).join("\n");
+                    displayOutput(files || "Ҳеҷ файл ё папкае вуҷуд надорад.");
+                    break;
+
+                case "cd":
+                    if (args[0] && fileSystem[`${currentDirectory}${args[0]}/`]) {
+                        currentDirectory += `${args[0]}/`;
+                        displayOutput(`Феҳрист ба "${currentDirectory}" иваз шуд.`);
+                    } else {
+                        displayOutput("Феҳрист вуҷуд надорад.");
+                    }
+                    break;
+
+                case "mkdir":
+                    if (args[0]) {
+                        const newDir = `${currentDirectory}${args[0]}/`;
+                        fileSystem[newDir] = {};
+                        displayOutput(`Папкаи "${args[0]}" бо муваффақият сохта шуд.`);
+                    } else {
+                        displayOutput("Илтимос, номи папкаро нишон диҳед.");
+                    }
+                    break;
+
+                case "touch":
+                    if (args[0]) {
+                        fileSystem[currentDirectory][args[0]] = "";
+                        displayOutput(`Файли "${args[0]}" бо муваффақият сохта шуд.`);
+                    } else {
+                        displayOutput("Илтимос, номи файлро нишон диҳед.");
+                    }
+                    break;
+
+                case "x":
+                    if (args[0] && fileSystem[currentDirectory][args[0]] !== undefined) {
+                        displayOutput(`Файли "${args[0]}" кушода шуд.`);
+                    } else {
+                        displayOutput("Файли воридшуда вуҷуд надорад.");
+                    }
+                    break;
+                    case "nano":
+    if (args[0]) {
+        const fileName = args[0];
+        // Агар файл вуҷуд дошта бошад
+        if (fileSystem[currentDirectory][fileName] !== undefined) {
+            let currentContent = fileSystem[currentDirectory][fileName];
+            const newContent = prompt(
+                `Шумо дар файли "${fileName}" ҳастед. Мазмуни кунунӣ:\n${currentContent}\n\nМатни навро ворид кунед:`
+            );
+            if (newContent !== null) {
+                fileSystem[currentDirectory][fileName] = newContent;
+                displayOutput(`Файли "${fileName}" бо мундариҷаи нав сабт шуд.`);
+            } else {
+                displayOutput(`Файли "${fileName}" бетағйир боқӣ монд.`);
+            }
+        } else {
+            displayOutput(`Файли "${fileName}" вуҷуд надорад.`);
+        }
+    } else {
+        displayOutput("Номи файлро барои кушодан ворид кунед.");
+    }
+    break;
+    case "cd":
+    if (args[0] === "..") {
+        if (currentDirectory !== "/") {
+            // Папкаро ба ақиб иваз кардан
+            const pathParts = currentDirectory.split("/").filter(Boolean); // Папкаҳоро ҷудо мекунад
+            pathParts.pop(); // Папкаи охиринро мегирад
+            currentDirectory = pathParts.length > 0 ? `/${pathParts.join("/")}/` : "/";
+            displayOutput(`Директория ба "${currentDirectory}" иваз шуд.`);
+        } else {
+            displayOutput("Шумо дар директорияи асосӣ ҳастед.");
+        }
+    } else if (args[0] && fileSystem[`${currentDirectory}${args[0]}/`]) {
+        // Ворид шудан ба папкаи мушаххас
+        currentDirectory += `${args[0]}/`;
+        displayOutput(`Директория ба "${currentDirectory}" иваз шуд.`);
+    } else {
+        displayOutput("Феҳристи воридшуда вуҷуд надорад.");
+    }
+    break;
+
+
+
+                case "install":
+                    if (args[0]) {
+                        installedPackages.push(args[0]);
+                        displayOutput(`Барномаи "${args[0]}" бо муваффақият насб шуд.`);
+                    } else {
+                        displayOutput("Илтимос, номи барномаро ворид кунед.");
+                    }
+                    break;
+
+                default:
+                    displayOutput("Команда ношинос аст.");
+            }
+
+            terminalBody.scrollTop = terminalBody.scrollHeight; // Скрол ба охир
+        }
+
+        function displayOutput(message) {
+            terminalBody.innerHTML += `<p>${message}</p>`;
+        }
+        
+    </script>
+</body>
+</html>

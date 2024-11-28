@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ҳакер Тугмаҳои Дароз</title>
+  <link rel="icon" type="image/x-icon" href="ahmad.png">
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: #00ff00;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .hacker-window {
+      width: 90%;
+      max-width: 800px;
+      border: 3px solid #00ff00;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      box-shadow: 0 0 20px #00ff00;
+      animation: flicker 2s infinite;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .buttons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      justify-content: center;
+    }
+
+    .hacker-button {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #001f00, #004f00);
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      font-size: 16px;
+      text-decoration: none;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hacker-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00;
+    }
+
+    .hacker-button:active {
+      transform: scale(1);
+    }
+
+    .hacker-button img {
+      width: 30px;
+      height: 30px;
+      margin-right: 15px;
+      pointer-events: none;
+    }
+
+    .hacker-button span {
+      flex: 1;
+      position: relative;
+    }
+
+    .hacker-button span::before {
+      content: attr(data-text);
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      position: absolute;
+      color: rgba(0, 255, 0, 0.2);
+      top: 0;
+      left: 0;
+      z-index: -1;
+      animation: glitch 1.5s infinite;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0, 0); opacity: 0.8; }
+      20% { transform: translate(-2px, 2px); opacity: 1; }
+      40% { transform: translate(2px, -2px); opacity: 0.9; }
+      60% { transform: translate(-1px, 1px); opacity: 1; }
+      80% { transform: translate(1px, -1px); opacity: 0.8; }
+      100% { transform: translate(0, 0); opacity: 0.9; }
+    }
+  </style>
+</head>
+<body>
+    <div class="hacker-window">
+        <div class="buttons-container">
+          <!-- Тугмаҳои хакерӣ бо логотипҳои нав -->
+          <a href="instagram.html" class="hacker-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+            <span data-text="Instagram">Instagram</span>
+          </a>
+          <a href="" class="hacker-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube">
+            <span data-text="YouTube">YouTube</span>
+          </a>
+          <a href="chat.html" class="hacker-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google">
+            <span data-text="Google">Google</span>
+          </a>
+          <a href="page4.html" class="hacker-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+            <span data-text="WhatsApp">WhatsApp</span>
+          </a>
+          <a href="page5.html" class="hacker-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+            <span data-text="Telegram">Telegram</span>
+          </a>
+          <a href="page6.html" class="hacker-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Facebook_Logo_%282019%29.svg" alt="Facebook">
+            <span data-text="Facebook">Facebook</span>
+          </a>
+          <a href="odam.html" class="hacker-button">
+            <img src="ahmad.png" alt="Camera" style="width: 50px; height: 50px;">
+            <span data-text="Camera">Camera</span>
+        </a>
+        
+        
+          <a href="page8.html" class="hacker-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/46/Bitcoin.svg" alt="Bitcoin">
+            <span data-text="Bitcoin">Bitcoin</span>
+          </a>
+          <a href="page9.html" class="hacker-button">
+            <img src="https://logos-world.net/wp-content/uploads/2020/04/Snapchat-Logo.png" alt="Snapchat">
+            <span data-text="Snapchat">Snapchat</span>
+          </a>
+                  
+          <a href="page10.html" class="hacker-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Pinterest_Logo.svg" alt="Pinterest">
+            <span data-text="Pinterest">Pinterest</span>
+          </a>
+        </div>
+      </div>
+          
+  </div>
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Равзанаи Огоҳӣ</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: #00ff00;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Тугмаи марказии зебо */
+    .bottom-button {
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #002200, #004f00);
+      border: 2px solid #00ff00;
+      color: #00ff00;
+      font-size: 16px;
+      font-family: 'Courier New', Courier, monospace;
+      text-decoration: none;
+      cursor: pointer;
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s;
+      box-shadow: 0 0 10px #00ff00, inset 0 0 5px #004f00;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .bottom-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #00ff00, 0 0 30px #00ff00, inset 0 0 10px #00ff00;
+    }
+
+    .bottom-button::before, .bottom-button::after {
+      content: '';
+      position: absolute;
+      width: 120%;
+      height: 2px;
+      background: #00ff00;
+      animation: glitch-animation 1s infinite;
+    }
+
+    .bottom-button::before {
+      top: 0;
+      left: -10%;
+    }
+
+    .bottom-button::after {
+      bottom: 0;
+      left: -10%;
+    }
+
+    @keyframes glitch-animation {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    /* Равзанаи огоҳӣ */
+    .alert-box {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: #00ff00;
+      padding: 20px;
+      border: 2px solid #00ff00;
+      box-shadow: 0 0 20px #00ff00;
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+      z-index: 1000;
+      width: 300px;
+      text-align: center;
+    }
+
+    .alert-box p {
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
+
+    .close-button {
+      display: inline-block;
+      padding: 5px 15px;
+      background: linear-gradient(135deg, #004f00, #002200);
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s;
+    }
+
+    .close-button:hover {
+      background: #007000;
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #00ff00;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -60%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Тугмаи марказӣ -->
+  <button class="bottom-button" onclick="showAlert()">Огоҳӣ</button>
+
+  <!-- Равзанаи огоҳӣ -->
+  <div class="alert-box" id="alertBox">
+    <p>Ин як паёми огоҳӣ аст!</p>
+    <button class="close-button" onclick="closeAlert()">Пӯшидан</button>
+  </div>
+
+  <script>
+    function showAlert() {
+      const alertBox = document.getElementById('alertBox');
+      alertBox.style.display = 'block';
+    }
+
+    function closeAlert() {
+      const alertBox = document.getElementById('alertBox');
+      alertBox.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Эффекти Matrix</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            overflow: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById("matrixCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Танзими андозаи canvas
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Ҳарфҳо барои Matrix
+        const alphabet = "01";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+
+        // Барои нигоҳ доштани сатри ҳар як сутун
+        const drops = Array.from({ length: columns }).fill(1);
+
+        // Функсияи кашидани Matrix
+        function draw() {
+            // Оҳиста тоза кардани canvas барои эҷоди эффекти ҳаракат
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Ранг ва андозаи шрифт барои Matrix
+            ctx.fillStyle = "#0f0";
+            ctx.font = `${fontSize}px monospace`;
+
+            // Кашидани ҳарфҳо дар ҳар як сутун
+            for (let i = 0; i < drops.length; i++) {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                // Агар хат дар поён расидааст, ба боло баргардад
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                // Ҳаракат ба сӯи поён
+                drops[i]++;
+            }
+        }
+
+        // Функсияро ҳар 33 миллисония иҷро мекунад
+        setInterval(draw, 33);
+
+        // Барои навсозии андозаи canvas ҳангоми тағйири андозаи экран
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drops.length = Math.floor(canvas.width / fontSize);
+            drops.fill(1);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Китобхона</title>
+    <link rel="icon" type="image/x-icon" href="ahmad.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px #0f0;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #0f0, 0 0 20px #0f0, 0 0 30px #0f0; }
+            to { text-shadow: 0 0 20px #0f0, 0 0 30px #0f0, 0 0 40px #0f0; }
+        }
+
+        .button {
+            background: #333;
+            color: #0f0;
+            padding: 15px 30px;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 1em;
+            transition: background 0.3s ease;
+        }
+
+        .button:hover {
+            background: #444;
+            box-shadow: 0 0 15px #0f0;
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #222;
+            color: #0f0;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px #0f0;
+            width: 90%;
+            max-width: 600px;
+            animation: slideIn 0.5s ease;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translate(-50%, -60%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        input, textarea {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #333;
+            color: #0f0;
+            border: 1px solid #444;
+            border-radius: 5px;
+            font-size: 1.1em;
+            resize: vertical;
+        }
+
+        .book-item {
+            margin: 10px 0;
+            cursor: pointer;
+            padding: 15px;
+            background: #333;
+            color: #0f0;
+            border: 2px solid #0f0;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.5s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .book-item:hover {
+            background-color: #444;
+        }
+
+        .delete-btn {
+            background: red;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: darkred;
+        }
+
+        .read-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #111;
+            color: #0f0;
+            padding: 40px;
+            width: 80%;
+            max-width: 700px;
+            max-height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #0f0;
+            animation: fadeIn 0.5s ease;
+            overflow-y: auto;
+        }
+
+        .read-modal h2 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .close-btn {
+            background: #f00;
+            color: #fff;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        .close-btn:hover {
+            background: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Китобхонаи Электронӣ</h1>
+        <button id="addBookBtn" class="button">Китоби Нав</button>
+        <button id="viewBooksBtn" class="button">Китобҳо</button>
+
+        <div id="newBookModal" class="modal hidden">
+            <h2>Китоби Нав</h2>
+            <label>Номи Китоб:</label>
+            <input type="text" id="bookTitle" placeholder="Номи китобро ворид кунед">
+            <label>Матни Китоб:</label>
+            <textarea id="bookContent" rows="10" placeholder="Матни китобро ворид кунед"></textarea>
+            <button id="saveBookBtn" class="button">Сахранит</button>
+            <button id="clearContentBtn" class="button">Пок кардан</button>
+            <button id="closeModalBtn" class="button">Пӯшидан</button>
+        </div>
+
+        <div id="booksModal" class="modal hidden">
+            <h2>Китобҳои Сахранитшуда</h2>
+            <div id="booksList"></div>
+            <button id="closeBooksModalBtn" class="button">Пӯшидан</button>
+        </div>
+
+        <div id="readBookModal" class="read-modal hidden">
+            <h2 id="bookTitleDisplay"></h2>
+            <p id="bookContentDisplay"></p>
+            <button id="closeReadModalBtn" class="close-btn">Пӯшидан</button>
+        </div>
+    </div>
+
+    <script>
+        const addBookBtn = document.getElementById('addBookBtn');
+        const viewBooksBtn = document.getElementById('viewBooksBtn');
+        const newBookModal = document.getElementById('newBookModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const saveBookBtn = document.getElementById('saveBookBtn');
+        const clearContentBtn = document.getElementById('clearContentBtn');
+        const booksModal = document.getElementById('booksModal');
+        const closeBooksModalBtn = document.getElementById('closeBooksModalBtn');
+        const booksList = document.getElementById('booksList');
+        const readBookModal = document.getElementById('readBookModal');
+        const closeReadModalBtn = document.getElementById('closeReadModalBtn');
+        const bookTitleDisplay = document.getElementById('bookTitleDisplay');
+        const bookContentDisplay = document.getElementById('bookContentDisplay');
+
+        let books = JSON.parse(localStorage.getItem('books')) || [];
+
+        addBookBtn.addEventListener('click', () => {
+            newBookModal.classList.remove('hidden');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            newBookModal.classList.add('hidden');
+        });
+
+        clearContentBtn.addEventListener('click', () => {
+            document.getElementById('bookContent').value = '';
+        });
+
+        saveBookBtn.addEventListener('click', () => {
+            const title = document.getElementById('bookTitle').value;
+            const content = document.getElementById('bookContent').value;
+
+            if (title && content) {
+                books.push({ title, content });
+                localStorage.setItem('books', JSON.stringify(books));
+                document.getElementById('bookTitle').value = '';
+                document.getElementById('bookContent').value = '';
+                newBookModal.classList.add('hidden');
+                alert('Китоб сахранит шуд!');
+            } else {
+                alert('Лутфан номи китоб ва матнро ворид кунед.');
+            }
+        });
+
+        viewBooksBtn.addEventListener('click', () => {
+            booksList.innerHTML = '';
+            books.forEach((book, index) => {
+                const bookItem = document.createElement('div');
+                bookItem.classList.add('book-item');
+                bookItem.textContent = `${index + 1}. ${book.title}`;
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.classList.add('delete-btn');
+                deleteBtn.textContent = 'Удалить';
+                deleteBtn.addEventListener('click', () => {
+                    books.splice(index, 1);
+                    localStorage.setItem('books', JSON.stringify(books));
+                    viewBooksBtn.click();
+                });
+
+                bookItem.appendChild(deleteBtn);
+                bookItem.addEventListener('click', () => {
+                    bookTitleDisplay.textContent = book.title;
+                    bookContentDisplay.textContent = book.content;
+                    readBookModal.classList.remove('hidden');
+                });
+                
+                booksList.appendChild(bookItem);
+            });
+            booksModal.classList.remove('hidden');
+        });
+
+        closeBooksModalBtn.addEventListener('click', () => {
+            booksModal.classList.add('hidden');
+        });
+
+        closeReadModalBtn.addEventListener('click', () => {
+            readBookModal.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Эффекти Matrix</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            overflow: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrixCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById("matrixCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Танзими андозаи canvas
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Ҳарфҳо барои Matrix
+        const alphabet = "01";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+
+        // Барои нигоҳ доштани сатри ҳар як сутун
+        const drops = Array.from({ length: columns }).fill(1);
+
+        // Функсияи кашидани Matrix
+        function draw() {
+            // Оҳиста тоза кардани canvas барои эҷоди эффекти ҳаракат
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Ранг ва андозаи шрифт барои Matrix
+            ctx.fillStyle = "#0f0";
+            ctx.font = `${fontSize}px monospace`;
+
+            // Кашидани ҳарфҳо дар ҳар як сутун
+            for (let i = 0; i < drops.length; i++) {
+                const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                // Агар хат дар поён расидааст, ба боло баргардад
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+
+                // Ҳаракат ба сӯи поён
+                drops[i]++;
+            }
+        }
+
+        // Функсияро ҳар 33 миллисония иҷро мекунад
+        setInterval(draw, 33);
+
+        // Барои навсозии андозаи canvas ҳангоми тағйири андозаи экран
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drops.length = Math.floor(canvas.width / fontSize);
+            drops.fill(1);
+        });
+    </script>
+</body>
+</html>

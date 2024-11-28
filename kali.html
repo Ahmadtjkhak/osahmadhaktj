@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Дунёи Kali Linux</title>
+  <link rel="icon" type="image/x-icon" href="ahmad.png">
+  <style>
+    
+
+    body {
+      margin: 0;
+      font-family: 'Roboto Mono', monospace;
+      background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+      color: #00ff99;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+
+    .window {
+      width: 85%;
+      height: 90%;
+      background: #101010;
+      border: 2px solid #00ff99;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #00ff99, inset 0 0 10px #003322;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+ 
+    header {
+      background: linear-gradient(90deg, #00ff99, #006644);
+      padding: 20px;
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      color: #0f0f0f;
+      text-shadow: 0 0 10px #ffffff;
+      border-bottom: 2px solid #00ff99;
+      box-shadow: 0 2px 10px #003322;
+    }
+
+    
+    main {
+      flex: 1;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      overflow-y: auto;
+      position: relative;
+    }
+
+   
+    .program-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 20px;
+      width: 100%;
+    }
+
+    .program-btn {
+      background: radial-gradient(circle at center, #00ff99, #003322);
+      color: #101010;
+      padding: 15px 20px;
+      border: 2px solid #00ff99;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: bold;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 10px #003322;
+    }
+
+    .program-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px #00ff99;
+    }
+
+
+    .output-box {
+      width: 100%;
+      height: 200px;
+      background: #0d0d0d;
+      border: 2px solid #00ff99;
+      border-radius: 10px;
+      padding: 15px;
+      overflow-y: auto;
+      font-size: 14px;
+      line-height: 1.5;
+      box-shadow: inset 0 0 10px #003322;
+      color: #00ff99;
+    }
+
+   
+    .input-container {
+      display: flex;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .input-container input {
+      flex: 1;
+      padding: 12px;
+      font-size: 16px;
+      background: #101010;
+      color: #00ff99;
+      border: 2px solid #00ff99;
+      border-radius: 10px 0 0 10px;
+      outline: none;
+      transition: box-shadow 0.3s;
+    }
+
+    .input-container input:focus {
+      box-shadow: 0 0 10px #00ff99;
+    }
+
+    .input-container button {
+      padding: 12px 20px;
+      font-size: 16px;
+      background: linear-gradient(90deg, #00ff99, #003322);
+      color: #101010;
+      border: none;
+      cursor: pointer;
+      border-radius: 0 10px 10px 0;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+
+    .input-container button:hover {
+      background: #00cc88;
+      box-shadow: 0 0 15px #00ff99;
+    }
+    body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: #00ff99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.window {
+  width: 90%;
+  max-width: 800px;
+  background-color: #1a1a1a;
+  border: 2px solid #00ff99;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 15px #00ff99;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80%;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px #00ff99;
+}
+
+.program-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.program-btn {
+  background-color: #0d0d0d;
+  color: #00ff99;
+  padding: 12px 20px;
+  border: 1px solid #00ff99;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.program-btn:hover {
+  background-color: #00ff99;
+  color: #121212;
+  box-shadow: 0 0 15px #00ff99;
+  transform: scale(1.1);
+}
+
+.program-btn:focus {
+  outline: none;
+  border-color: #00cc66;
+  box-shadow: 0 0 8px #00cc66;
+}
+
+.program-btn:active {
+  transform: scale(0.95);
+  background-color: #00cc66;
+}
+
+#command-input {
+  width: 100%;
+  padding: 10px;
+  background-color: #0d0d0d;
+  color: #00ff99;
+  border: 1px solid #00ff99;
+  border-radius: 8px;
+  font-size: 16px;
+  resize: none;
+  margin-bottom: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.output-box {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #0d0d0d;
+  border: 1px solid #00ff99;
+  border-radius: 5px;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+.program-btn {
+  background-color: #0d0d0d;
+  color: #121212; /* Ранги ҳарфҳоро ба сиёҳ иваз кардан */
+  padding: 12px 20px;
+  border: 1px solid #00ff99;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.program-btn:hover {
+  background-color: #00ff99;
+  color: #121212; /* Ҳангоми hover ҳарфҳо ҳамоно сиёҳ боқӣ мемонанд */
+  box-shadow: 0 0 15px #00ff99;
+  transform: scale(1.1);
+}
+
+.program-btn:focus {
+  outline: none;
+  border-color: #00cc66;
+  box-shadow: 0 0 8px #00cc66;
+}
+
+.program-btn:active {
+  transform: scale(0.95);
+  background-color: #00cc66;
+}
+
+  </style>
+</head>
+<body>
+  <div class="window">
+    <header>ДУНЁИ KALI LINUX</header>
+    <main>
+
+      <div class="program-list">
+        <button class="program-btn" onclick="showInfo('Nmap', 'Барномаи Nmap барои скан кардани шабака ва муайян кардани портҳо истифода мешавад.')">Nmap</button>
+        <button class="program-btn" onclick="showInfo('Metasploit', 'Metasploit як платформаи тавоно барои озмоиши осебпазирии системаҳо мебошад.')">Metasploit</button>
+        <button class="program-btn" onclick="showInfo('Wireshark', 'Wireshark барои таҳлили трафики шабакавӣ истифода мешавад.')">Wireshark</button>
+        <button class="program-btn" onclick="showInfo('Aircrack-ng', 'Aircrack-ng маҷмӯи асбобҳо барои озмоиши амнияти шабакаҳои бесим мебошад.')">Aircrack-ng</button>
+        <button class="program-btn" onclick="showInfo('Burp Suite', 'Burp Suite як платформа барои таҳлили осебпазирии веб-барномаҳо мебошад.')">Burp Suite</button>
+        <button class="program-btn" onclick="showInfo('Hydra', 'Hydra барои ҳамлаҳои парол дар системаҳои гуногун истифода мешавад.')">Hydra</button>
+        <button class="program-btn" onclick="showInfo('John the Ripper', 'John the Ripper барои шикастани паролҳо бо истифода аз dictionary ва brute-force ҳамлаҳо истифода мешавад.')">John the Ripper</button>
+        <button class="program-btn" onclick="showInfo('Netcat', 'Netcat як асбоби чандир барои ташкили пайвастшавиҳо ва интиқоли маълумот мебошад.')">Netcat</button>
+        <button class="program-btn" onclick="showInfo('SQLmap', 'SQLmap барои ошкор ва истифодаи осебпазирии SQL injection истифода мешавад.')">SQLmap</button>
+        <button class="program-btn" onclick="showInfo('Ettercap', 'Ettercap барои ҳамлаҳои Man-in-the-Middle (MiTM) ва таҳлили трафики шабака истифода мешавад.')">Ettercap</button>
+        <button class="program-btn" onclick="showInfo('Maltego', 'Maltego барои таҳлили маълумоти иктишофӣ ва визуализатсияи робитаҳо истифода мешавад.')">Maltego</button>
+        <button class="program-btn" onclick="showInfo('BeEF', 'BeEF як воситаи ҳамла ба браузерҳо барои санҷиши амнияти веб-сайтҳо мебошад.')">BeEF</button>
+        <button class="program-btn" onclick="showInfo('Wifite', 'Wifite як асбоби автоматӣ барои ҳамла ба шабакаҳои бесим мебошад, ки WPA/WPA2 ва WEP ро дастгирӣ мекунад.')">Wifite</button>
+        <button class="program-btn" onclick="showInfo('Setoolkit', 'Setoolkit як асбоби тавоно барои ҳамлаҳои муҳандисии иҷтимоӣ мебошад, аз ҷумла эҷоди саҳифаҳои қалбакии веб.')">Setoolkit</button>
+        <button class="program-btn" onclick="showInfo('Pipal', 'Pipal як воситаи таҳлили паролҳо мебошад, ки барои ошкор кардани тамоюлҳои умумӣ дар рӯйхати паролҳо истифода мешавад.')">Pipal</button>
+        <button class="program-btn" onclick="showInfo('Httrack', 'Httrack барои нусхабардории вебсайтҳо ва захира кардани онҳо барои дидани оффлайн истифода мешавад.')">Httrack</button>
+
+      </div>
+
+
+
+      <div class="output-box" id="output">Интихоб кунед ё команда ворид намоед...</div>
+
+
+      <div class="input-container">
+        <input type="text" id="commandInput" placeholder="Команда ворид кунед...">
+        <button onclick="executeCommand()">Иҷро</button>
+      </div>
+    </main>
+  </div>
+  <div class="button-container">
+    <button class="program-btn" onclick="window.location.href='comanda.html'">Зеркаши</button>
+    <button class="program-btn" onclick="window.location.href='terminal.html'">Терминал</button>
+    <button class="program-btn" onclick="window.location.href='kitobihaker.html'">Китоб</button>
+  </div>
+  
+
+  <script>
+    function showInfo(program, description) {
+      const output = document.getElementById('output');
+      output.innerHTML = `<b>${program}:</b> ${description}`;
+    }
+
+    function executeCommand() {
+      const commandInput = document.getElementById('commandInput');
+      const command = commandInput.value.trim();
+      const output = document.getElementById('output');
+
+      switch (command) {
+    case "cd":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои ворид шудан ба директорияҳо истифода мешавад.`;
+        break;
+    case "ls":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои намоиши файлҳо ва папкаҳо истифода мешавад.`;
+        break;
+    case "pwd":
+        output.innerHTML = `<b>${command}:</b> Ин команда директорияи ҷорӣ нишон медиҳад.`;
+        break;
+    case "mkdir":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои эҷоди директорияи нав истифода мешавад.`;
+        break;
+    case "rm":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои ҳазфи файлҳо ё папкаҳо истифода мешавад. Бо эҳтиёт истифода кунед!`;
+        break;
+    case "cp":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои нусхабардории файлҳо ё директорияҳо истифода мешавад.`;
+        break;
+    case "mv":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои кӯчонидани файлҳо ё папкаҳо ба ҷойи дигар истифода мешавад.`;
+        break;
+    case "cat":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои хондани мундариҷаи файл истифода мешавад.`;
+        break;
+    case "echo":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои чоп кардани матн ба экран ё навиштани он ба файл истифода мешавад.`;
+        break;
+    case "touch":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои сохтани файли нав истифода мешавад ё вақти охирини тағйири файлро навсозӣ мекунад.`;
+        break;
+    case "clear":
+        output.innerHTML = `<b>${command}:</b> Ин команда экрани терминалро тоза мекунад.`;
+        break;
+    case "exit":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои баромадан аз терминал истифода мешавад.`;
+        break;
+    case "grep":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои ҷустуҷӯи матн дар дохили файлҳо истифода мешавад.`;
+        break;
+    case "find":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои ҷустуҷӯи файлҳо ва папкаҳо дар система истифода мешавад.`;
+        break;
+    case "chmod":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои тағйир додани ҳуқуқи дастрасии файлҳо истифода мешавад.`;
+        break;
+    case "chown":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои тағйир додани соҳиби файл ё папка истифода мешавад.`;
+        break;
+    case "df":
+        output.innerHTML = `<b>${command}:</b> Ин команда маълумотро дар бораи фазои озоди диск нишон медиҳад.`;
+        break;
+    case "du":
+        output.innerHTML = `<b>${command}:</b> Ин команда ҳаҷми истифодашударо дар диск нишон медиҳад.`;
+        break;
+    case "tar":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои бойгонӣ (архив) кардани файлҳо истифода мешавад.`;
+        break;
+    case "zip":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои фишурдани файлҳо ба формати ZIP истифода мешавад.`;
+        break;
+    case "unzip":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои кушодани файлҳои ZIP истифода мешавад.`;
+        break;
+    case "kill":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои қатъ кардани равандҳо (process) истифода мешавад.`;
+        break;
+    case "ps":
+        output.innerHTML = `<b>${command}:</b> Ин команда рӯйхати равандҳои ҷориро нишон медиҳад.`;
+        break;
+    case "top":
+        output.innerHTML = `<b>${command}:</b> Ин команда маълумоти динамикӣ дар бораи равандҳои ҷориро нишон медиҳад.`;
+        break;
+    case "man":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои нишон додани дастурҳои муфассали командаҳо истифода мешавад.`;
+        break;
+    case "wget":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои зеркашии файлҳо аз интернет истифода мешавад.`;
+        break;
+    case "curl":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои ирсоли дархостҳои HTTP/HTTPS ва гирифтани маълумот истифода мешавад.`;
+        break;
+    case "ping":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои санҷидани пайвасти шабакавӣ истифода мешавад.`;
+        break;
+    case "ssh":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои пайваст шудан ба серверҳои дурдаст истифода мешавад.`;
+        break;
+    case "scp":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои нусхабардории файлҳо байни компютерҳои дурдаст истифода мешавад.`;
+        break;
+    case "history":
+        output.innerHTML = `<b>${command}:</b> Ин команда рӯйхати командҳои пештараро нишон медиҳад.`;
+        break;
+    case "alias":
+        output.innerHTML = `<b>${command}:</b> Ин команда барои сохтани номи кӯтоҳ барои командаҳои дароз истифода мешавад.`;
+        break;
+    case "unalias":
+        output.innerHTML = `<b>${command}:</b> Ин команда алиасҳои муайяншударо тоза мекунад.`;
+        break;
+    case "whoami":
+        output.innerHTML = `<b>${command}:</b> Ин команда номи корбарии ҷории шуморо нишон медиҳад.`;
+        break;
+    case "uptime":
+        output.innerHTML = `<b>${command}:</b> Ин команда вақтро аз лаҳзаи ба кор даромадани система нишон медиҳад.`;
+        break;
+    default:
+        output.innerHTML = `<b>${command}:</b> Команда номаълум аст ё дастгирӣ намешавад.`;
+        break;
+}
+
+    
+      commandInput.value = '';
+    }
+  </script>
+  
+</body>
+</html>
